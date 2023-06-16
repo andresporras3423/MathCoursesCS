@@ -47,6 +47,16 @@ namespace MathCoursesCS.Controllers
         }
 
 
+
+        // this challenge generate a function which can be either: increasing, decreasing, alterning or undefined
+        // the struture of the function can be either of the next six:
+        // 1) a+bx
+        // 2) a+(b^x)
+        // 3) a+x^(b)
+        // 4) a+ln(bx)
+        // 5) a+ln(b^x)
+        // 6) a+(x^b)
+        // where a and b are number -5 and 5 except for 0.
         [HttpGet]
         [Route("type_series_problem")]
         public IActionResult typeSeriesProblem()

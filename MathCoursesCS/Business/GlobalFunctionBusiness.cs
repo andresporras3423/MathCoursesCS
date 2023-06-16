@@ -12,18 +12,17 @@ namespace MathCoursesCS.Business
 
         }
 
+
+        
+        // convert the int parameter to a double and the pass it to the addPlus function and return the given string for the function.
         public string addPlus(int number)
         {
-            if (number >= 0)
-            {
-                return "+" + Convert.ToString(number);
-            }
-            else
-            {
-                return Convert.ToString(number);
-            }
+            Double dblNumber = number;
+            return addPlus(dblNumber);
         }
 
+        // if the given double parameter is positive then add a plus sign at the start
+        // return a string
         public string addPlus(double number)
         {
             if (number >= 0)
@@ -36,13 +35,23 @@ namespace MathCoursesCS.Business
             }
         }
 
+        // convert the string parameter to a double and the pass it to the addPlus function and return the given string for the function.
+        public string addPlus(string number)
+        {
+            Double dblNumber = Convert.ToDouble(number);
+            return addPlus(dblNumber);
+        }
+
+        // this function receives two string parameters (question, solution) and one list<string> parameter (options)
+        // add the three parameters to a Dictionary of string, object
+        // use respectively the keys: question, solution, options
+        // convert the dictionary to a json string and return the json.
         public string jsonResponse(String question, String solution, List<String> options)
         {
             Dictionary<String, Object> questionInfo = new Dictionary<String, Object>();
             questionInfo["question"] = question;
             questionInfo["solution"] = solution;
             questionInfo["options"] = options;
-            //return Ok(JsonSerializer.Serialize("4+ln(5x)"));
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
@@ -53,6 +62,7 @@ namespace MathCoursesCS.Business
             return json;
         }
 
+       
         public string jsonResponse(String question, int solution, List<String> options)
         {
             String strSolution = Convert.ToString(solution);
