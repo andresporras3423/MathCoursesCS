@@ -96,10 +96,54 @@ namespace MathCoursesCS.Controllers
                 func = Convert.ToString(addNumber) + "+ln(x^(" + Convert.ToString(opNumber) + "))";
                 solution = opNumber > 0 ? "increasing" : "decreased";
             }
-            string question = "for the next function:"+func+" define among the options which one describe it better when x->∞";
+            string question = "for the next function:"+func+", define among the options which one describe it better when x->∞";
             List<string> options = new List<string> { "increasing", "decreasing", "alterning", "undefined" };
             return Content(gf.jsonResponse(question, solution, options), "application/json");
         }
 
+        [HttpGet]
+        [Route("bounded_series_problem")]
+        public IActionResult boundedSeriesProblem()
+        {
+            int a = (new Random().Next(6) + 1) * ((new Random().Next(2) * 2) - 1);
+            int b = (new Random().Next(6) + 1) * ((new Random().Next(2) * 2) - 1);
+            int c = (new Random().Next(6) + 1) * ((new Random().Next(2) * 2) - 1);
+            int limitType = new Random().Next(6);
+            string func = "";
+            string solution = "";
+            if (limitType==0)
+            {
+                func = Convert.ToString(a)+"*(x^"+Convert.ToString(Math.Abs(b*2))+")";
+                solution = a < 0 ? "inferior bounded" : "superior bounded";
+            }
+            else if (limitType == 1)
+            {
+                func = Convert.ToString(a) + "*ln(" + Convert.ToString(b)+"x)";
+                solution = a < 0 ? "inferior bounded" : "superior bounded";
+            }
+            else if (limitType == 2)
+            {
+                func = Convert.ToString(Math.Abs(a)) + "/((" + Convert.ToString(b) + "+x)^("+ Convert.ToString(c) + "))";
+                solution = (c % 2) == 0 ? "inferior bounded" : "not bounded";
+            }
+            else if (limitType == 3)
+            {
+                func = Convert.ToString(Math.Abs(a)) + "/((" + Convert.ToString(b) + ")^(x+" + Convert.ToString(c) + "))";
+                solution = b<0 ? "superior bounded" : "superior bounded";
+            }
+            else if (limitType == 4)
+            {
+                func = Convert.ToString(Math.Abs(a)) + "/(" + Convert.ToString(b) + "+(" + Convert.ToString(c) + "x)^2)";
+                solution = c < 0 ? "not bounded" : "bounded";
+            }
+            else if (limitType == 5)
+            {
+                func = "cos(x)*sin(x)^("+ Convert.ToString(a) + ")";
+                solution = a < 0 ? "not bounded" : "bounded";
+            }
+            string question = "Select the option that better describes the next function: " + func;
+            List<string> options = new List<string> { "superior bounded", "inferior bounded", "bounded", "not bounded" };
+            return Content(gf.jsonResponse(question, solution, options), "application/json");
+        }
     }
 }
