@@ -145,5 +145,39 @@ namespace MathCoursesCS.Controllers
             List<string> options = new List<string> { "superior bounded", "inferior bounded", "bounded", "not bounded" };
             return Content(gf.jsonResponse(question, solution, options), "application/json");
         }
+
+
+        [HttpGet]
+        [Route("convergent_series_problem")]
+        public IActionResult convergentSeriesProblem()
+        {
+            int problem = new Random().Next(4);
+            int a = (new Random().Next(6) + 1) * ((new Random().Next(2) * 2) - 1);
+            String question = "";
+            String solution = "";
+
+            if (problem == 0)
+            {
+                question = "for de next function: tan(x), defines the function type when x tends to "+Convert.ToString(a)+ "*π/2";
+                solution = a % 2 == 0 ? "convergent" : "divergent";
+            }
+            else if (problem == 1)
+            {
+                question = "for de next function: cot(x), defines the function type when x tends to " + Convert.ToString(a) + "*π/2";
+                solution = a % 2 != 0 ? "convergent" : "divergent";
+            }
+            else if (problem == 2) 
+            {
+                question = "for de next function: sec(x), defines the function type when x tends to " + Convert.ToString(a) + "*π/2";
+                solution = a % 2 == 0 ? "convergent" : "divergent";
+            }
+            else
+            {
+                question = "for de next function: csc(x), defines the function type when x tends to " + Convert.ToString(a) + "*π/2";
+                solution = a % 2 != 0 ? "convergent" : "divergent";
+            }
+            List<string> options = new List<string> { "divergent", "convergent" };
+            return Content(gf.jsonResponse(question, solution, options), "application/json");
+        }
     }
 }

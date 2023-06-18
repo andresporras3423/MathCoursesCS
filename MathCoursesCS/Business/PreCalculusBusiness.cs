@@ -14,5 +14,15 @@
             List<int> options = Enumerable.Range(Solution-initial, 5).ToList();
             return options;
         }
+
+        public class convergentOption
+        {
+            public string function="";
+            public string limit="";
+            public convergentOption(string nFunction, string nLimit) {
+                function = nFunction;
+                limit = nLimit;
+            }
+        }
     }
 }
