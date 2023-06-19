@@ -179,5 +179,24 @@ namespace MathCoursesCS.Controllers
             List<string> options = new List<string> { "divergent", "convergent" };
             return Content(gf.jsonResponse(question, solution, options), "application/json");
         }
+
+
+        // the next problem is deduce from the next principle:
+        // Sum from 1 to n = n*(n+1)/2
+        // therefore: Sum of the first n terms in a+bx will be = a*n + b*n*(n+1)/2
+        // a*n since a is a constant
+        // b*n*(n+1)/2 because sum of the first n terms in bx is just the sum of the first n terms in x but multiply for b.
+        [HttpGet]
+        [Route("gauss_series_problem")]
+        public IActionResult gaussSeriesProblem()
+        {
+            int a = new Random().Next(51) + 50;
+            int b = (new Random().Next(6) + 1) * ((new Random().Next(2) * 2) - 1);
+            int c = (new Random().Next(6) + 1) * ((new Random().Next(2) * 2) - 1);
+            string question = "Find the sum of the first "+Convert.ToString(a)+" terms in the function: " + Convert.ToString(b) + gf.addPlus(c)+ "x";
+            int solution = (b*a) + (c * a * (a + 1) / 2);
+            List<int> options = pb.getContinuousOptions(solution);
+            return Content(gf.jsonResponse(question, solution, options), "application/json");
+        }
     }
 }
