@@ -198,5 +198,44 @@ namespace MathCoursesCS.Controllers
             List<int> options = pb.getContinuousOptions(solution);
             return Content(gf.jsonResponse(question, solution, options), "application/json");
         }
+
+
+
+
+
+        // Sum from 1 to n = n*(n+1)/2
+        [HttpGet]
+        [Route("simple_gauss_problem")]
+        public IActionResult simpleGaussProblem()
+        {
+            int a = new Random().Next(151) + 50;
+            string question = "Find the sum of the first " + Convert.ToString(a) + " terms";
+            int solution = a * (a + 1) / 2;
+            List<int> options = pb.getContinuousOptions(solution);
+            return Content(gf.jsonResponse(question, solution, options), "application/json");
+        }
+
+
+
+        // the next problem is deduce from the next principle:
+        // Sum from 1 to n of a^x = 1 + a + a^2 + ... + a^n = S
+        // aS =  a + a^2 + ... + a^(n+1)
+        // aS-S = 1-a^(n+1)
+        // S(a-1) = 1-a^(n+1)
+        // S= (1-a^(n+1))/(a-1)
+        // link explaining this series: https://www.youtube.com/watch?v=ZBagdQmAdQw&ab_channel=MateFacil
+        [HttpGet]
+        [Route("geometric_series_problem")]
+        public IActionResult geometricSeriesProblem()
+        {
+            int a = (new Random().Next(6) + 5);
+            int b = (new Random().Next(5) + 1);
+            int c = (new Random().Next(5) + 1);
+            int d = (new Random().Next(5) + 1);
+            string question = "Find the sum of the first " + Convert.ToString(a) + " terms in the function: " + Convert.ToString(b) + "+(" + Convert.ToString(c) + "/" + Convert.ToString(d) + ")^x";
+            double solution = (a * b) + (1 - Math.Pow(c / d, a + 1)) / (1 - a);
+            List<string> options = pb.getContinuousOptions(solution);
+            return Content(gf.jsonResponse(question, Convert.ToString(solution), options), "application/json");
+        }
     }
 }
