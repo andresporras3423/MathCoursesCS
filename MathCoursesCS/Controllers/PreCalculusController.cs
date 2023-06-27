@@ -237,5 +237,35 @@ namespace MathCoursesCS.Controllers
             List<string> options = pb.getContinuousOptions(solution);
             return Content(gf.jsonResponse(question, Convert.ToString(solution), options), "application/json");
         }
+
+
+
+
+
+        // the next problem is deduce from the next principle:
+        // Sum from 1 to n of a^x = 1 + a + a^2 + ... + a^n = S
+        // aS =  a + a^2 + ... + a^(n+1)
+        // aS-S = 1-a^(n+1)
+        // S(a-1) = 1-a^(n+1)
+        // S= (1-a^(n+1))/(a-1)
+        // link explaining this series: https://www.youtube.com/watch?v=ZBagdQmAdQw&ab_channel=MateFacil
+        [HttpGet]
+        [Route("n_arithmetic_series_problem")]
+        public IActionResult nArithmeticSeriesProblem()
+        {
+            int a = (new Random().Next(91) + 10);
+            int b = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            int c = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            int sol = b + (c * a);
+            List<int> series = new List<int>();
+            for (int i = 1; i <= 5; i++)
+            {
+                series.Add(b + (c * i));
+            }
+            // question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the value of the "+str(a)+"th item?:"
+            string question = "The first five element of a series (from 1th to 5th) are: "+String.Join(", ",series)+ ". Which is the value of the "+Convert.ToString(a)+"th item?";
+            List<int> options = pb.getContinuousOptions(sol);
+            return Content(gf.jsonResponse(question, Convert.ToString(sol), options), "application/json");
+        }
     }
 }
