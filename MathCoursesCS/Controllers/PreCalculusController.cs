@@ -242,13 +242,6 @@ namespace MathCoursesCS.Controllers
 
 
 
-        // the next problem is deduce from the next principle:
-        // Sum from 1 to n of a^x = 1 + a + a^2 + ... + a^n = S
-        // aS =  a + a^2 + ... + a^(n+1)
-        // aS-S = 1-a^(n+1)
-        // S(a-1) = 1-a^(n+1)
-        // S= (1-a^(n+1))/(a-1)
-        // link explaining this series: https://www.youtube.com/watch?v=ZBagdQmAdQw&ab_channel=MateFacil
         [HttpGet]
         [Route("n_arithmetic_series_problem")]
         public IActionResult nArithmeticSeriesProblem()
@@ -265,6 +258,55 @@ namespace MathCoursesCS.Controllers
             // question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the value of the "+str(a)+"th item?:"
             string question = "The first five element of a series (from 1th to 5th) are: "+String.Join(", ",series)+ ". Which is the value of the "+Convert.ToString(a)+"th item?";
             List<int> options = pb.getContinuousOptions(sol);
+            return Content(gf.jsonResponse(question, Convert.ToString(sol), options), "application/json");
+        }
+
+
+
+
+
+        
+        [HttpGet]
+        [Route("n_geometric_series_problem")]
+        public IActionResult nGeometricSeriesProblem()
+        {
+            int a = (new Random().Next(6) + 10);
+            int b = (new Random().Next(5) + 2) * ((new Random().Next(2) * 2) - 1);
+            int c = (new Random().Next(5) + 2) * ((new Random().Next(2) * 2) - 1);
+            double sol = b + Math.Pow(c,a);
+            List<double> series = new List<double>();
+            for (int i = 1; i <= 5; i++)
+            {
+                series.Add(b + Math.Pow(c, i));
+            }
+            // question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the value of the "+str(a)+"th item?:"
+            string question = "The first five elements of a series (from 1th to 5th) are: " + String.Join(", ", series) + ". Which is the value of the " + Convert.ToString(a) + "th item?";
+            List<string> options = pb.getContinuousOptions(sol);
+            return Content(gf.jsonResponse(question, Convert.ToString(sol), options), "application/json");
+        }
+
+
+
+
+// get the product of the first n (from 0 to a) numbers of the geometric series
+// clue: the product of the first a items in b*(c^x) is (b^(a+1))*(c^d) where d is the sum from 0 to a
+        [HttpGet]
+        [Route("geometric_product_series_problem")]
+        public IActionResult geometricProductSeriesProblem()
+        {
+            int a = (new Random().Next(2) + 4); //
+            int b = (new Random().Next(5) + 2) * ((new Random().Next(2) * 2) - 1);
+            int c = (new Random().Next(2) + 2) * ((new Random().Next(2) * 2) - 1);
+            int d = Enumerable.Range(1, a).Sum();
+            double sol = Math.Pow(b, a + 1) * Math.Pow(c , d);
+            List<double> series = new List<double>();
+            for (int i = 0; i < 3; i++)
+            {
+                series.Add(b * Math.Pow(c, i));
+            }
+            // question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the value of the "+str(a)+"th item?:"
+            string question = "The first 3 elements of a geometric series are: " + String.Join(", ", series) + ". Which is the value of the product of the first " + Convert.ToString(a+1) + " elements?";
+            List<string> options = pb.getContinuousOptions(sol);
             return Content(gf.jsonResponse(question, Convert.ToString(sol), options), "application/json");
         }
     }
