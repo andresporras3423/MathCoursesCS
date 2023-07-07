@@ -1,5 +1,6 @@
 ﻿using MathCoursesCS.Business;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
@@ -307,6 +308,32 @@ namespace MathCoursesCS.Controllers
             // question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the value of the "+str(a)+"th item?:"
             string question = "The first 3 elements of a geometric series are: " + String.Join(", ", series) + ". Which is the value of the product of the first " + Convert.ToString(a+1) + " elements?";
             List<string> options = pb.getContinuousOptions(sol);
+            return Content(gf.jsonResponse(question, Convert.ToString(sol), options), "application/json");
+        }
+
+
+        //# find limit when x->a for the function  (x^2-a^2)/(x-a) + b 
+        //        def simpleLimitProblem():
+        //    try:
+        //        a = random.randint(1,10)*(random.randint(0,1)*2-1)
+        //        b = random.randint(1,10)*(random.randint(0,1)*2-1)
+        //        solution=(2*a)+b
+        //        question = "[lim x->(" + str(a) + ")] for ((x^2)+(" + str(b) + "*x)+(" + str((-a * b) - (a * *2)) + "))/(x-(" + str(a) + "))"
+        //        options=coursesFunctionsBll.arithmeticAlternatives(solution)
+        //        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        //        return [jsonResponse]
+        //    except Exception as er:
+        //        return er
+        [HttpGet]
+        [Route("simple_limit_problem")]
+        public IActionResult simpleLimitProblem()
+        {
+            int a = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            int b = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            int sol = (a * 2) + b;
+            // question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the value of the "+str(a)+"th item?:"
+            string question = "Lim x->("+a.ToString()+") (x^2-"+(a*a).ToString()+")/(x"+gf.addPlus(-1*a)+")"+ gf.addPlus(b);
+            List<int> options = pb.getContinuousOptions(sol);
             return Content(gf.jsonResponse(question, Convert.ToString(sol), options), "application/json");
         }
     }
