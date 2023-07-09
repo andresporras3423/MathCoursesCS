@@ -336,5 +336,25 @@ namespace MathCoursesCS.Controllers
             List<int> options = pb.getContinuousOptions(sol);
             return Content(gf.jsonResponse(question, Convert.ToString(sol), options), "application/json");
         }
+
+        // (x-a)(x-b)/(x-a)
+        // (x^2-ax-bx+ab)/(x-a)
+        // (x^2-(a+b)x+ab)/(x-a)
+        [HttpGet]
+        [Route("simple_limit_problem2")]
+        public IActionResult simpleLimitProblem2()
+        {
+            int a = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            int b = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            int sol = a-b;
+            // question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the value of the "+str(a)+"th item?:"
+            string question = "Lim x->(" + a.ToString() + ") (x^2" +gf.noOneAllowed(gf.addPlus(-a - b))+"x"  + gf.addPlus(b * a) + ")/(x" + gf.addPlus(-a)+")";
+            List<int> options = pb.getContinuousOptions(sol);
+            return Content(gf.jsonResponse(question, Convert.ToString(sol), options), "application/json");
+        }
     }
+
+
+    
 }
+

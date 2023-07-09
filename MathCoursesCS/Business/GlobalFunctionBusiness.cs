@@ -62,6 +62,22 @@ namespace MathCoursesCS.Business
             return json;
         }
 
+        public string noOneAllowed(double num)
+        {
+            return noOneAllowed(Convert.ToString(num));
+        }
+
+        public string noOneAllowed(int num)
+        {
+            return noOneAllowed(Convert.ToString(num));
+        }
+
+        public string noOneAllowed(string num)
+        {
+            if (num == "1" || num == "-1") return "";
+            else return num;
+        }
+
        
         public string jsonResponse(String question, int solution, List<String> options)
         {
