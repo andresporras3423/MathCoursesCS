@@ -352,9 +352,27 @@ namespace MathCoursesCS.Controllers
             List<int> options = pb.getContinuousOptions(sol);
             return Content(gf.jsonResponse(question, Convert.ToString(sol), options), "application/json");
         }
+
+
+        // find limit when x->inf for the function  (ax+b)/(cx+d) + (ex+f)/(gx+h)
+        [HttpGet]
+        [Route("simple_infinite_limit")]
+        public IActionResult simpleInfiniteLimit()
+        {
+            int a = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            int b = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            int c = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            int d = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            int e = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            int f = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            int g = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            int h = (new Random().Next(10) + 1) * ((new Random().Next(2) * 2) - 1);
+            double sol = Math.Round((Convert.ToDouble(a)/c)+(Convert.ToDouble(e)/g),4);
+            // question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the value of the "+str(a)+"th item?:"
+            string question = @"Lim x-> ∞ (" + gf.noOneAllowed(a) + "x" + gf.addPlus(b) + ")/(" + gf.noOneAllowed(c) + "x" + gf.addPlus(d) + ")+(" + gf.noOneAllowed(e) + "x" + gf.addPlus(f) + ")/(" + gf.noOneAllowed(g) + "x" + gf.addPlus(h) + ")";
+            List<string> options = pb.getContinuousOptions(sol);
+            return Content(gf.jsonResponse(question, Convert.ToString(sol), options), "application/json");
+        }
     }
-
-
-    
 }
 

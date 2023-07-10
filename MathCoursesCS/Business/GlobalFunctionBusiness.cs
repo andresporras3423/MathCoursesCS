@@ -74,7 +74,7 @@ namespace MathCoursesCS.Business
 
         public string noOneAllowed(string num)
         {
-            if (num == "1" || num == "-1") return "";
+            if (num == "1" || num == "-1") return num.Replace("1","");
             else return num;
         }
 
